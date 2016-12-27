@@ -50,11 +50,13 @@
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpDX">
-      <HintPath>..\lib\SharpDX\SharpDX.dll</HintPath>
+    <Reference Include="SharpDX, Version=2.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\SharpDX\SharpDX.dll</HintPath>
     </Reference>
-    <Reference Include="SharpDX.RawInput">
-      <HintPath>..\lib\SharpDX\SharpDX.RawInput.dll</HintPath>
+    <Reference Include="SharpDX.RawInput, Version=2.6.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\libs\SharpDX\SharpDX.RawInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
