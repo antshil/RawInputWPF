@@ -47,7 +47,7 @@ namespace RawInputWPF.RawInput
         {
             if (msg == WM_INPUT)
             {
-                Device.HandleMessage(lParam);
+                Device.HandleMessage(lParam, hwnd);
             }
 
             return IntPtr.Zero;
