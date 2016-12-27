@@ -1,0 +1,11 @@
+﻿<Window x:Class="RawInputWPF.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525"
+        xmlns:viewModel="clr-namespace:RawInputWPF.ViewModel"
+        DataContext="{x:Static viewModel:MainWindowViewModel.Instance}">
+    <StackPanel>
+        <Label>Pressed buttons:</Label>
+        <Label Content="{Binding Text, Mode=OneWay}"/>
+    </StackPanel>
+</Window>
