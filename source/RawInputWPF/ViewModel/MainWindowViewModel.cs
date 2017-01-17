@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Interop;
 using GalaSoft.MvvmLight;
 using RawInputWPF.RawInput;
+using SharpDX.RawInput;
 
 
 namespace RawInputWPF.ViewModel
@@ -13,8 +14,11 @@ namespace RawInputWPF.ViewModel
         private readonly RawInputListener _rawInputListener;
         private string _gamepadDeviveName;
         private string _pressedButtons;
-        private string _keyboardDeviveName;
+        private string _keyboardDeviceName;
         private string _pressedKey;
+        private string _mouseDeviceName;
+        private string _mouseButtons;
+        
 
         public static MainWindowViewModel Instance
         {
@@ -39,12 +43,12 @@ namespace RawInputWPF.ViewModel
             }
         }
 
-        public string KeyboardDeviveName
+        public string KeyboardDeviceName
         {
-            get { return _keyboardDeviveName; }
+            get { return _keyboardDeviceName; }
             set
             {
-                Set(ref _keyboardDeviveName, value);
+                Set(ref _keyboardDeviceName, value);
             }
         }
 
@@ -54,6 +58,24 @@ namespace RawInputWPF.ViewModel
             set
             {
                 Set(ref _pressedKey, value);
+            }
+        }
+
+        public string MouseDeviceName
+        {
+            get { return _mouseDeviceName; }
+            set
+            {
+                Set(ref _mouseDeviceName, value);
+            }
+        }
+
+        public string MouseButtons
+        {
+            get { return _mouseButtons; }
+            set
+            {
+                Set(ref _mouseButtons, value);
             }
         }
 
@@ -71,6 +93,7 @@ namespace RawInputWPF.ViewModel
                 return;
 
             _rawInputListener.ButtonsChanged -= OnButtonsChanged;
+            _rawInputListener.MouseButtonsChanged -= OnMouseButtonsChanged;
             _rawInputListener.KeyDown -= OnKeyDown;
             _rawInputListener.KeyDown -= OnKeyUp;
             _rawInputListener.Clear();
@@ -85,19 +108,20 @@ namespace RawInputWPF.ViewModel
 
             Application.Current.MainWindow.Unloaded += OnMainWindowUnloaded;
             _rawInputListener.ButtonsChanged += OnButtonsChanged;
+            _rawInputListener.MouseButtonsChanged += OnMouseButtonsChanged;
             _rawInputListener.KeyDown += OnKeyDown;
             _rawInputListener.KeyUp += OnKeyUp;
         }
 
         private void OnKeyDown(object sender, KeyboardEventArgs e)
         {
-            KeyboardDeviveName = string.Format(@"{0}", e.DeviceName);
+            KeyboardDeviceName = string.Format(@"{0}", e.DeviceName);
             PressedKey = e.Key.ToString();
         }
 
         private void OnKeyUp(object sender, KeyboardEventArgs e)
         {
-            KeyboardDeviveName = "";
+            KeyboardDeviceName = "";
             PressedKey = "";
         }
 
@@ -116,6 +140,12 @@ namespace RawInputWPF.ViewModel
                 GamepadDeviveName = "";
                 PressedButtons = "";
             }
+        }
+
+        private void OnMouseButtonsChanged(object sender, MouseEventArgs e)
+        {
+            MouseDeviceName = string.Format(@"{0}", e.DeviceName);
+            MouseButtons = e.Buttons.ToString();
         }
     }
 }

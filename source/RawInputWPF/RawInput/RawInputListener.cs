@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Windows.Input;
 using System.Windows.Interop;
 using RawInputWPF.Helpers;
@@ -12,6 +13,8 @@ namespace RawInputWPF.RawInput
     public class RawInputListener
     {
         public event EventHandler<GamepadEventArgs> ButtonsChanged;
+
+        public event EventHandler<MouseEventArgs> MouseButtonsChanged;
 
         public event EventHandler<KeyboardEventArgs> KeyDown;
         public event EventHandler<KeyboardEventArgs> KeyUp;
@@ -32,9 +35,11 @@ namespace RawInputWPF.RawInput
 
             Device.RegisterDevice(UsagePage.Generic, UsageId.GenericGamepad, DeviceFlags.InputSink, hWnd);
             Device.RegisterDevice(UsagePage.Generic, UsageId.GenericKeyboard, DeviceFlags.InputSink, hWnd);
+            Device.RegisterDevice(UsagePage.Generic, UsageId.GenericMouse, DeviceFlags.InputSink, hWnd);
 
             Device.RawInput += OnRawInput;
             Device.KeyboardInput += OnKeyboardInput;
+            Device.MouseInput += OnMouseInput;
         }
 
         public void Clear()
@@ -51,6 +56,20 @@ namespace RawInputWPF.RawInput
             }
 
             return IntPtr.Zero;
+        }
+
+        private void OnMouseInput(object sender, MouseInputEventArgs e)
+        {
+            var handler = MouseButtonsChanged;
+            if (handler == null)
+                return;
+
+            var deviceName = "";
+            if (e.Device != IntPtr.Zero)
+                deviceName = DeviceHelper.SearchDevice(e.Device).DeviceName;
+            var evt = new MouseEventArgs(deviceName, e.ButtonFlags);
+
+            handler(this, evt);
         }
 
         private void OnKeyboardInput(object sender, KeyboardInputEventArgs e)

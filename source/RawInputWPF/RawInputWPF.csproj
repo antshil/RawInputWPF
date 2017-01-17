@@ -94,6 +94,7 @@
     <Compile Include="RawInput\EventArgs.cs" />
     <Compile Include="RawInput\GamepadEventArgs.cs" />
     <Compile Include="RawInput\KeyboardEventArgs.cs" />
+    <Compile Include="RawInput\MouseEventArgs.cs" />
     <Compile Include="RawInput\RawInputListener.cs" />
     <Compile Include="RawInput\RawInputParser.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
